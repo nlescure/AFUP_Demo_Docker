@@ -1,0 +1,18 @@
+version: '3'
+services:
+  nginx:
+    image: nginx
+    volumes:
+      - /data/docker/demo-docker/nginx/config:/etc/nginx
+      - /data/docker/demo-docker/nginx/log:/var/log/nginx
+      - /data/docker/demo-docker/www:/var/www/html
+    ports:
+      - 8000:80
+    #links:
+    #  - phpfpm
+  phpfpm:
+    image: php:7.1-fpm-alpine
+    volumes:
+      - /data/docker/demo-docker/www:/var/www/html
+    ports:
+      - 9000 

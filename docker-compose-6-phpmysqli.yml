@@ -1,0 +1,35 @@
+version: '3'
+services:
+  nginx:
+    image: nginx
+    volumes:
+      - /data/docker/demo-docker/nginx/config:/etc/nginx
+      - /data/docker/demo-docker/nginx/log:/var/log/nginx
+      - /data/docker/demo-docker/www:/var/www/html
+    ports:
+      - 8000:80
+    #links:
+    #  - phpfpm
+  phpfpm:
+    image: fiberoptic/php-fpm-mysqli
+    volumes:
+      - /data/docker/demo-docker/www:/var/www/html
+    ports:
+      - 9000 
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: pouf
+      MYSQL_USER: bd_user
+      MYSQL_PASSWORD: bd_pwd
+      MYSQL_DATABASE: bd_test
+    volumes:
+      - demo-afup-bd:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - 8001:80
+    links:
+      - mysql:db
+volumes:
+  demo-afup-bd:

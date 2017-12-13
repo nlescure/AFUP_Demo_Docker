@@ -1,0 +1,22 @@
+server {
+    listen 80;
+
+    root /var/www/html;
+
+    server_name docker.demo-afup;
+
+    charset utf-8;
+
+    access_log /var/log/nginx/docker.php-nginx-access.log;
+    error_log  /var/log/nginx/docker.php-nginx-error.log error;
+
+    location ~ ^(.*)\.(png|jpeg|jpg|gif|css|js)$ {
+        expires +365d;
+    }
+
+    index index.php;
+
+    location ~ \.php$ {
+        try_files $uri =404;
+    }
+}
